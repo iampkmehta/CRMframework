@@ -9,13 +9,13 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import com.microsoft.schemas.office.visio.x2012.main.CellType;
+import org.junit.Test;
 
 public class ExecuteLeadTest 
 {
 	static Keywords keyword;
-	public static void main(String[] args) throws IOException 
+	@Test
+	public void leadTest() throws IOException 
 	{
 		keyword = new Keywords();
 		ArrayList data = new ArrayList();
@@ -78,6 +78,16 @@ public class ExecuteLeadTest
 				{
 					String objectName = (String)data.get(i+2);
 					keyword.click(objectName);
+				}
+			}
+			
+			if(data.get(i).equals("verifyTitle"))
+			{
+				if(data.get(i+3).equals("yes"))
+				{
+					String expectedValue = (String)data.get(i+1);
+					String actualValue = keyword.verifyTitle();
+					System.out.println(actualValue);
 				}
 			}
 		}

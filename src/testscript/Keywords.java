@@ -19,7 +19,7 @@ public class Keywords
 		System.setProperty("webdriver.chrome.driver", "D:\\selenium\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		prop = new Properties();
 		input = new FileInputStream("F:\\Project\\java project\\CRMframework\\src\\objectreposetry\\objectreposetry.properties");
 		prop.load(input);
@@ -36,5 +36,10 @@ public class Keywords
 	public void click(String objectName)
 	{
 		driver.findElement(By.xpath(prop.getProperty(objectName))).click();
+	}
+	
+	public String verifyTitle()
+	{
+		return driver.getTitle();
 	}
 }
