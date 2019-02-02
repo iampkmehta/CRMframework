@@ -9,17 +9,24 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 
 public class ExecuteLeadTest 
 {
 	static Keywords keyword;
+	
+	@Rule
+	public ErrorCollector errCol = new ErrorCollector();
+	
 	@Test
 	public void leadTest() throws IOException 
 	{
 		keyword = new Keywords();
 		ArrayList data = new ArrayList();
-		FileInputStream file = new FileInputStream("F:\\Project\\java project\\CRMframework\\LeadSuites.xlsx");
+		FileInputStream file = new FileInputStream("F:\\Project\\java project\\CRMframework\\src\\testcase\\LeadSuites.xlsx");
 		XSSFWorkbook wbk = new XSSFWorkbook(file);
 		Sheet sheet = wbk.getSheet("TestSteps");
 		Iterator itr = sheet.iterator();
@@ -87,7 +94,11 @@ public class ExecuteLeadTest
 				{
 					String expectedValue = (String)data.get(i+1);
 					String actualValue = keyword.verifyTitle();
-					System.out.println(actualValue);
+					try{
+						Assert.assertEquals(expectedValue, actualValue);
+					}catch(Throwable t){
+						errCol.addError(t);
+					}
 				}
 			}
 		}
